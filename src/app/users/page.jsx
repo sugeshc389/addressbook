@@ -48,7 +48,6 @@ const App = () => {
         />
         <Button onClick={handleSubmit} value={"Submit"} />
       </div>
-     
     </div>
   );
 };
