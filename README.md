@@ -37,4 +37,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 =======
 # addressbook_server
+<<<<<<< HEAD
 >>>>>>> 00d6e18 (first commit)
+=======
+# addressbook_server
+>>>>>>> 5fac324 (first commit)
