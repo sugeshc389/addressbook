@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import newRequest from "../axios/axios";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import DeleteModal from "../components/DeleteModal";
 
 const Page = () => {
   const [users, setUsers] = useState([]);
   const [showModal, setModal] = useState(false);
   const [editUser, setEditUser] = useState([]);
+  const [deleShowModal, setDeleteShowModal] = useState(false);
+  const [id, setId] = useState();
 
   const getUsers = async () => {
     try {
@@ -22,7 +25,12 @@ const Page = () => {
     setModal(true);
     const res = await newRequest.put("/edituser", { id: userId });
     setEditUser(res.data);
-    console.log(editUser);
+    console.log(editUser, "This is edit");
+  };
+  const handleDelete = async (userId) => {
+    setDeleteShowModal(true);
+    setId(userId);
+    console.log(userId);
   };
   useEffect(() => {
     getUsers();
@@ -60,6 +68,7 @@ const Page = () => {
               </tr>
               <tr>
                 <Button
+                  onClick={() => handleDelete(user._id)}
                   value={"Delete"}
                   className={
                     "w-[70px] h-[30px] bg-[#e11e1e] rounded-md text-white text-[13px] "
@@ -70,6 +79,11 @@ const Page = () => {
           </tbody>
         ))}
       </table>
+      <DeleteModal
+        isVisible={deleShowModal}
+        closeModal={() => setDeleteShowModal(false)}
+        userId={id}
+      />
       <Modal
         isVisible={showModal}
         onClose={() => setModal(false)}
