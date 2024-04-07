@@ -1,8 +1,8 @@
-const Button = ({ value,onClick}) => {
+const Button = ({ value,onClick,className}) => {
  
     return (
       <div className="text-center">
-        <button onClick={onClick} className="w-[100px] h-[50px] bg-[#5D87FF] rounded-md text-white text-[13px]  ">
+        <button onClick={onClick} className={className} >
           {value}
         </button>
       </div>
