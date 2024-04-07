@@ -2,30 +2,38 @@
 import React, { useEffect, useState } from "react";
 import newRequest from "../axios/axios";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
 
 const Page = () => {
   const [users, setUsers] = useState([]);
+  const [showModal, setModal] = useState(false);
+  const [editUser, setEditUser] = useState([]);
 
   const getUsers = async () => {
     try {
       const res = await newRequest.get("/getusers");
 
       setUsers(res.data);
-      console.log(users, "hiaaaaaa");
     } catch (error) {
       console.error("Fetchin error", error);
     }
   };
+  const handleEdit = async (userId) => {
+    setModal(true);
+    const res = await newRequest.put("/edituser", { id: userId });
+    setEditUser(res.data);
+    console.log(editUser);
+  };
   useEffect(() => {
     getUsers();
   }, []);
-  useEffect(() => {}, [users]);
+  useEffect(() => {}, [users, editUser]);
 
   return (
     <div className="p-10">
       <h1>All Users Details </h1>
       <table className="">
-        <thead >
+        <thead>
           <tr>
             <th>User</th>
             <th>Email</th>
@@ -43,6 +51,7 @@ const Page = () => {
             <div className="flex p-2 space-x-10">
               <tr>
                 <Button
+                  onClick={() => handleEdit(user._id)}
                   value={"Edit"}
                   className={
                     "w-[70px] h-[30px] bg-[#0b8119] rounded-md text-white text-[13px] "
@@ -61,6 +70,11 @@ const Page = () => {
           </tbody>
         ))}
       </table>
+      <Modal
+        isVisible={showModal}
+        onClose={() => setModal(false)}
+        editUser={editUser}
+      />
     </div>
   );
 };
