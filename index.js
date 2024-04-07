@@ -11,6 +11,7 @@ app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 app.use('/api',userRouter);
 
+
 mongoose.connect(process.env.MONGODB).then(
     console.log('DB Connected')
 ).catch(e =>{
