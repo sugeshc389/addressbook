@@ -50,3 +50,14 @@ export const updateUser = async (req, res) => {
     console.log(error);
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await User.deleteOne({ _id: id });
+    res.json(result);
+  } catch (error) {
+    
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
