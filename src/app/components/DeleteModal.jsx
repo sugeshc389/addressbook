@@ -4,9 +4,9 @@ import Button from "./Button";
 const DeleteModal = ({ isVisible, closeModal, userId }) => {
   if (!isVisible) return null;
   const handleDelete = async () => {
-    const res = await newRequest.delete(`/deleteUser/${userId}`)
+    const res = await newRequest.delete(`/deleteUser/${userId}`);
+    window.location.reload();
 
-    console.log(res);
     closeModal();
   };
   return (

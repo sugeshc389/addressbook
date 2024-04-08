@@ -2,14 +2,12 @@ import newRequest from "../axios/axios";
 import Button from "./Button";
 import React, { useState, useRef } from "react";
 
-
 const Modal = ({ isVisible, onClose, editUser }) => {
   if (!isVisible) return null;
 
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
-
 
   const nameRef = useRef();
   const phoneRef = useRef();
@@ -24,10 +22,9 @@ const Modal = ({ isVisible, onClose, editUser }) => {
       userId,
     });
     alert("User Updated");
+    window.location.reload();
     onClose();
-    
   };
- 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
