@@ -1,4 +1,5 @@
 import User from "../model/userModel.js";
+import fs from "fs";
 
 export const addUser = async (req, res) => {
   try {
@@ -8,7 +9,7 @@ export const addUser = async (req, res) => {
     await newUser.save();
     res.status(201).send("User created");
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -19,7 +20,7 @@ export const getUsers = async (req, res) => {
     console.log(getUsers);
     res.status(201).send(getUsers);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -29,7 +30,7 @@ export const editUser = async (req, res) => {
     console.log(findUser, "edituser");
     res.status(201).send(findUser);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -44,10 +45,10 @@ export const updateUser = async (req, res) => {
       { _id: id },
       { name: name, email: email, phone: phone }
     );
-    console.log(updatedUser, "This is updated user");
+
     res.status(201).send(updatedUser);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -57,7 +58,24 @@ export const deleteUser = async (req, res) => {
     const result = await User.deleteOne({ _id: id });
     res.json(result);
   } catch (error) {
-    
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const saveUser = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const findUser = await User.findById(userId);
+    const jsonString = JSON.stringify(findUser);
+
+    fs.appendFile("users.json", jsonString, (error) => {
+      if (error) throw error;
+
+      console.log("File saved");
+    });
+    console.log(findUser);
+    res.status(201).send("User Saved");
+  } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 };
