@@ -32,6 +32,12 @@ const Page = () => {
     setId(userId);
     console.log(userId);
   };
+  const handleSave = async (userId) => {
+    const res = await newRequest.post("/saveUser", { userId });
+    if (res.status == "201") alert("This user is Saved");
+
+    console.log(res);
+  };
   useEffect(() => {
     getUsers();
   }, []);
@@ -40,12 +46,12 @@ const Page = () => {
   return (
     <div className="p-10">
       <h1>All Users Details </h1>
-      <table className="">
+      <table className="w-full ">
         <thead>
           <tr>
-            <th>User</th>
-            <th>Email</th>
-            <th>Phone</th>
+            <th className="bg-gray-400">User</th>
+            <th className="bg-gray-400">Email</th>
+            <th className="bg-gray-400">Phone</th>
           </tr>
         </thead>
 
@@ -56,13 +62,13 @@ const Page = () => {
               <td>{user.email}</td>
               <td>{user.phone}</td>
             </tr>
-            <div className="flex p-2 space-x-10">
+            <div className="flex p-2 space-x-32">
               <tr>
                 <Button
                   onClick={() => handleEdit(user._id)}
                   value={"Edit"}
                   className={
-                    "w-[70px] h-[30px] bg-[#0b8119] rounded-md text-white text-[13px] "
+                    "w-[70px] h-[30px] bg-[#0b8119] rounded-md text-white text-[13px] font-bold tracking-wider "
                   }
                 />
               </tr>
@@ -71,7 +77,16 @@ const Page = () => {
                   onClick={() => handleDelete(user._id)}
                   value={"Delete"}
                   className={
-                    "w-[70px] h-[30px] bg-[#e11e1e] rounded-md text-white text-[13px] "
+                    "w-[70px] h-[30px] bg-[#e11e1e] rounded-md text-white text-[13px] font-bold tracking-wider "
+                  }
+                />
+              </tr>
+              <tr>
+                <Button
+                  onClick={() => handleSave(user._id)}
+                  value={"Save"}
+                  className={
+                    "w-[70px] h-[30px] bg-[#9f9f9f] rounded-md text-white text-[13px] font-bold tracking-wider "
                   }
                 />
               </tr>
@@ -79,6 +94,7 @@ const Page = () => {
           </tbody>
         ))}
       </table>
+
       <DeleteModal
         isVisible={deleShowModal}
         closeModal={() => setDeleteShowModal(false)}
